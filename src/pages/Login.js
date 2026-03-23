@@ -7,6 +7,7 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const login = async () => {
@@ -14,12 +15,9 @@ export default function Login() {
         try {
             setLoading(true);
             const res = await axios.post("http://localhost:5000/api/admin/login", { username, password });
-            console.log("reserer", res)
             localStorage.setItem("token", res.data.token);
             navigate("/");
             toast.success("Login successful");
-
-
         } catch (err) {
             toast.error(err.response?.data || "Login failed");
         } finally {
@@ -37,13 +35,32 @@ export default function Login() {
                     value={username}
                     onChange={e => setUsername(e.target.value)}
                 />
-                <input
-                    type="password"
-                    className="form-control mb-2"
-                    placeholder="Password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                />
+
+                <div className="position-relative mb-2">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        className="form-control"
+                        placeholder="Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                    <span
+                        onClick={() => setShowPassword(prev => !prev)}
+                        style={{
+                            position: "absolute",
+                            right: "10px",
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            cursor: "pointer",
+                            userSelect: "none",
+                            fontSize: "1rem",
+                            color: "#555"
+                        }}
+                    >
+                        👁️
+                    </span>
+                </div>
+
                 <button className="btn btn-primary w-100" onClick={login} disabled={loading}>
                     {loading ? "Logging in..." : "Login"}
                 </button>
