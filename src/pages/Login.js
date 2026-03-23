@@ -16,8 +16,10 @@ export default function Login() {
             const res = await axios.post("http://localhost:5000/api/admin/login", { username, password });
             console.log("reserer", res)
             localStorage.setItem("token", res.data.token);
-            toast.success("Login successful");
             navigate("/");
+            toast.success("Login successful");
+
+
         } catch (err) {
             toast.error(err.response?.data || "Login failed");
         } finally {
