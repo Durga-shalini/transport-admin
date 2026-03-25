@@ -14,7 +14,7 @@ export default function Login() {
         if (!username || !password) return toast.error("Enter all fields");
         try {
             setLoading(true);
-            const res = await axios.post("http://localhost:5000/api/admin/login", { username, password });
+            const res = await axios.post("https://transport-backend-azhc.onrender.com/api/admin/login", { username, password });
             localStorage.setItem("token", res.data.token);
             navigate("/");
             toast.success("Login successful");
