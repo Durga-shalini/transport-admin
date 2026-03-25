@@ -17,7 +17,9 @@ export default function Login() {
             const res = await axios.post("https://transport-backend-azhc.onrender.com/api/admin/login", { username, password });
             localStorage.setItem("token", res.data.token);
             navigate("/");
+
             toast.success("Login successful");
+            window.location.reload();
         } catch (err) {
             toast.error(err.response?.data || "Login failed");
         } finally {
